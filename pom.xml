@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.sologlobe</groupId>
@@ -36,7 +37,19 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>TODO</mainClass>
+					<mainClass>com.sologlobe.studentstats.App</mainClass>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>3.0.7</version>
+				<configuration>
+					<changeLogFile>src/main/resources/db.master.xml</changeLogFile>
+					<driver>org.hsqldb.jdbcDriver</driver>
+					<url>jdbc:hsqldb:file:tmp/studentstats</url>
+					<username>root</username>
+					<password>toor</password>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -62,18 +75,24 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.2.6.Final</version>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>3.6.6.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-maven-plugin</artifactId>
-			<version>3.0.7</version>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>5.0.1.Final</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<version>1.7.5</version>
 		</dependency>
 	</dependencies>
+	
 </project>

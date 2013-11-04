@@ -1,30 +1,28 @@
 package com.sologlobe.studentstats.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class Student {
+public class Student implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 
 	@Id @GeneratedValue
 	private Long id;
 	
-	@NotNull @NotEmpty
 	@Column(nullable = false)
 	private String firstName;
 	
-	@NotNull
 	@Column(nullable = false)
 	private String lastName;
 	
-	@NotNull @NotEmpty
 	@Column(nullable = false)
 	private BigDecimal score;
 

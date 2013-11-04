@@ -14,7 +14,7 @@ public final class PersistenceManager {
 	private final EntityManagerFactory emf;
 
 	private PersistenceManager() {
-		emf = Persistence.createEntityManagerFactory(null);
+		emf = Persistence.createEntityManagerFactory("StudentScores-PU");
 	}
 
 	public EntityManagerFactory getEntityManagerFactory() {

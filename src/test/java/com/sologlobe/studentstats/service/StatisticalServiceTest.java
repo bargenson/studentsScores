@@ -8,19 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.fest.assertions.data.MapEntry;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.sologlobe.studentstats.model.Student;
 
 public class StatisticalServiceTest {
-
-	private StatisticalService statisticalService;
-
-	@Before
-	public void setUp() {
-		this.statisticalService = new StatisticalService();
-	}
 
 	/*
 	 * Team 1
@@ -28,10 +20,10 @@ public class StatisticalServiceTest {
 	@Test
 	public void computeMedianWithAnOddListTest() {
 		// Given
-		final List<Student> students = buildStudentsWithScore(1, 2, 3, 7, 8, 8, 9, 10, 12);
+		final StatisticalService statisticalService = new StatisticalService(buildStudentsWithScore(1, 2, 3, 7, 8, 8, 9, 10, 12));
 
 		// When
-		final BigDecimal result = statisticalService.computeMedian(students);
+		final BigDecimal result = statisticalService.computeMedian();
 
 		// Then
 		assertThat(result).isEqualTo(new BigDecimal(8));
@@ -40,13 +32,13 @@ public class StatisticalServiceTest {
 	@Test
 	public void computeMedianWithAnEvenListTest() {
 		// Given
-		final List<Student> students = buildStudentsWithScore(1, 2, 3, 7, 8, 9, 10, 12);
+		final StatisticalService statisticalService = new StatisticalService(buildStudentsWithScore(1, 2, 3, 3, 7, 8, 10, 10));
 
 		// When
-		final BigDecimal result = statisticalService.computeMedian(students);
+		final BigDecimal result = statisticalService.computeMedian();
 
 		// Then
-		assertThat(result).isEqualTo(new BigDecimal("7.5"));
+		assertThat(result).isEqualTo(new BigDecimal("5"));
 	}
 
 	/*
@@ -55,10 +47,10 @@ public class StatisticalServiceTest {
 	@Test
 	public void computeModeTest() {
 		// Given
-		final List<Student> students = buildStudentsWithScore(4, 4, 4, 4, 4, 6, 7, 8, 9, 10);
+		final StatisticalService statisticalService = new StatisticalService(buildStudentsWithScore(4, 4, 4, 4, 4, 6, 7, 8, 9, 10));
 
 		// When
-		final BigDecimal result = statisticalService.computeMode(students);
+		final BigDecimal result = statisticalService.computeMode();
 
 		// Then
 		assertThat(result).isEqualTo(new BigDecimal("4"));
@@ -71,25 +63,25 @@ public class StatisticalServiceTest {
 	@Test
 	public void computeStandardDeviationTest() {
 		// Given
-		final List<Student> students = buildStudentsWithScore(2, 4, 4, 4, 5, 5, 7, 9);
+		final StatisticalService statisticalService = new StatisticalService(buildStudentsWithScore(1, 2, 4, 4, 4, 5, 5, 7, 9));
 
 		// When
-		final BigDecimal result = statisticalService.computeStandardDeviation(students);
+		final BigDecimal result = statisticalService.computeStandardDeviation();
 
 		// Then
-		assertThat(result).isEqualByComparingTo(new BigDecimal("2"));
+		assertThat(result).isEqualByComparingTo(new BigDecimal("2.27"));
 	}
 
 	@Test
 	public void computeAverage() {
 		// Given
-		final List<Student> students = buildStudentsWithScore(1, 2, 8, 9);
+		final StatisticalService statisticalService = new StatisticalService(buildStudentsWithScore(2, 2, 9, 9));
 
 		// When
-		final BigDecimal result = statisticalService.computeAverage(students);
+		final BigDecimal result = statisticalService.computeAverage();
 
 		// Then
-		assertThat(result).isEqualTo(new BigDecimal("5"));
+		assertThat(result).isEqualByComparingTo(new BigDecimal("5.5"));
 	}
 
 	
@@ -99,11 +91,11 @@ public class StatisticalServiceTest {
 	@Test
 	public void computeCumulativeFrequency() {
 		// Given
-		final List<Student> students = buildStudentsWithScore(1, 2, 2, 3, 3, 3, 4, 4, 4, 4);
+		final StatisticalService statisticalService = new StatisticalService(buildStudentsWithScore(1, 2, 2, 3, 3, 3, 4, 4, 4, 4));
 
 		// When
 		final Map<BigDecimal, Integer> result = statisticalService
-				.computeCumulativeFrequency(students);
+				.computeCumulativeFrequency();
 
 		// Then
 		assertThat(result).isNotNull().hasSize(4)

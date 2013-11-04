@@ -1,6 +1,7 @@
 package com.sologlobe.studentstats.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -12,9 +13,16 @@ import com.sologlobe.studentstats.model.Student;
 
 public class StatisticalService {
 	
-	
+	private List<Student> students;
 
-	public BigDecimal computeMedian(final List<Student> students) {
+	public StatisticalService(List<Student> students) {
+		if(students.isEmpty()) {
+			throw new RuntimeException("Impossible to compute an empty list.");
+		}
+		this.students = students;
+	}
+
+	public BigDecimal computeMedian() {
 		Collections.sort(students, new Comparator<Student>() {
 
 			public int compare(Student o1, Student o2) {
@@ -31,7 +39,7 @@ public class StatisticalService {
 		}
 	}
 
-	public BigDecimal computeMode(final List<Student> students) {
+	public BigDecimal computeMode() {
 		final Map<BigDecimal, Integer> distribution = new HashMap<BigDecimal, Integer>();
 		for (Student student : students) {
 			BigDecimal score = student.getScore();
@@ -60,31 +68,31 @@ public class StatisticalService {
 		return sortedDistribution.firstKey();
 	}
 
-	public BigDecimal computeStandardDeviation(final List<Student> students) {
-		final BigDecimal variance = computeVariance(students);
-		return BigDecimal.valueOf(Math.sqrt(variance.doubleValue()));
+	public BigDecimal computeStandardDeviation() {
+		final BigDecimal variance = computeVariance();
+		return BigDecimal.valueOf(Math.sqrt(variance.doubleValue())).setScale(2, RoundingMode.HALF_EVEN);
 	}
 
-	private BigDecimal computeVariance(List<Student> students) {
-		final BigDecimal average = computeAverage(students);
+	private BigDecimal computeVariance() {
+		final BigDecimal average = computeAverage();
 		
 		BigDecimal squareSum = BigDecimal.ZERO;
 		for (Student student : students) {
 			squareSum = squareSum.add(average.subtract(student.getScore()).pow(2)); 
 		}
 		
-		return squareSum.divide(BigDecimal.valueOf(students.size()));
+		return squareSum.divide(BigDecimal.valueOf(students.size()), 2, RoundingMode.HALF_EVEN);
 	}
 	
-	public BigDecimal computeAverage(List<Student> students) {
+	public BigDecimal computeAverage() {
 		BigDecimal sum = BigDecimal.ZERO;
 		for (Student student : students) {
 			sum = sum.add(student.getScore());
 		}
-		return sum.divide(BigDecimal.valueOf(students.size()));
+		return sum.divide(BigDecimal.valueOf(students.size()), 2, RoundingMode.HALF_EVEN);
 	}
 	
-	public Map<BigDecimal, Integer> computeCumulativeFrequency(final List<Student> students) {
+	public Map<BigDecimal, Integer> computeCumulativeFrequency() {
 		final Map<BigDecimal, Integer> result = new TreeMap<BigDecimal, Integer>();
 		
 		Collections.sort(students, new Comparator<Student>() {
