@@ -14,6 +14,19 @@ import com.sologlobe.studentstats.model.Student;
 
 public class StatisticalServiceTest {
 
+	@Test
+	public void computeAverage() {
+		// Given
+		final StatisticalService statisticalService = new StatisticalService(buildStudentsWithScore(2, 2, 9, 9));
+		
+		// When
+		final BigDecimal result = statisticalService.computeAverage();
+		
+		// Then
+		assertThat(result).isEqualByComparingTo(new BigDecimal("5.5"));
+	}
+
+	
 	/*
 	 * Team 1
 	 */
@@ -72,19 +85,7 @@ public class StatisticalServiceTest {
 		assertThat(result).isEqualByComparingTo(new BigDecimal("2.27"));
 	}
 
-	@Test
-	public void computeAverage() {
-		// Given
-		final StatisticalService statisticalService = new StatisticalService(buildStudentsWithScore(2, 2, 9, 9));
 
-		// When
-		final BigDecimal result = statisticalService.computeAverage();
-
-		// Then
-		assertThat(result).isEqualByComparingTo(new BigDecimal("5.5"));
-	}
-
-	
 	/*
 	 * Team 4
 	 */
