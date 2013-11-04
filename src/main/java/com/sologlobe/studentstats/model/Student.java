@@ -29,6 +29,17 @@ public class Student {
 	private BigDecimal score;
 
 	
+	public Student() {
+		
+	}
+	
+	public Student(Long id, String firstName, String lastName, BigDecimal score) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.score = score;
+	}
+
 	public Long getId() {
 		return id;
 	}
